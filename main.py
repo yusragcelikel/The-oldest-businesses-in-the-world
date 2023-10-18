@@ -47,3 +47,23 @@ missing_countries_series = missing_countries["country"]
 
 # Display the series
 print("\n", missing_countries_series)
+
+
+
+# Import new_businesses.csv
+new_businesses = pd.read_csv("/Users/yusragokcecelikel/Downloads/CSV files/oldest_business_dataset/new_businesses.csv")
+
+# Add the data in new_businesses to the existing businesses
+all_businesses = pd.concat([new_businesses, businesses])
+
+# Merge and filter to find countries with missing business data
+new_all_countries = all_businesses.merge(countries, on="country_code", how="outer",  indicator=True)
+new_missing_countries = new_all_countries[new_all_countries["_merge"] != "both"]
+
+# Group by continent and create a "count_missing" column
+count_missing = new_missing_countries.groupby("continent").agg({"country":"count"})
+count_missing.columns = ["count_missing"]
+print("\n", count_missing)
+
+
+
