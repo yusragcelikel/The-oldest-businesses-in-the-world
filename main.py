@@ -8,7 +8,7 @@ businesses = pd.read_csv("/Users/yusragokcecelikel/Downloads/CSV files/oldest_bu
 sorted_businesses = businesses.sort_values(by="year_founded")
 
 # Display the first few lines of sorted_businesses
-print(sorted_businesses.head())
+print("\n", sorted_businesses.head())
 
 
 
@@ -20,7 +20,7 @@ businesses_countries = sorted_businesses.merge(countries, on="country_code" )
 
 # Filter businesses_countries to include countries in North America only
 north_america = businesses_countries[businesses_countries["continent"] == "North America"]
-print(north_america.head())
+print("\n", north_america.head())
 
 
 
@@ -32,4 +32,18 @@ merged_continent = continent.merge(businesses_countries, on=["continent", "year_
 
 # Subset continent so that only the four columns of interest are included
 subset_merged_continent = merged_continent[["continent", "country", "business", "year_founded"]]
-print(subset_merged_continent)
+print("\n", subset_merged_continent)
+
+
+
+# Use .merge() to create a DataFrame, all_countries
+all_countries = businesses.merge(countries, on="country_code", how="right",  indicator=True)
+
+# Filter to include only countries without oldest businesses
+missing_countries = all_countries[all_countries["_merge"] != "both"]
+
+# Create a series of the country names with missing oldest business data
+missing_countries_series = missing_countries["country"]
+
+# Display the series
+print("\n", missing_countries_series)
