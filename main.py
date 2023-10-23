@@ -67,3 +67,15 @@ print("\n", count_missing)
 
 
 
+# Import categories.csv and merge to businesses
+categories = pd.read_csv("/Users/yusragokcecelikel/Downloads/CSV files/oldest_business_dataset/categories.csv")
+businesses_categories = businesses.merge(categories, on="category_code")
+
+# Create a DataFrame which lists the number of oldest businesses in each category
+count_business_cats = businesses_categories.set_index("category").agg("count")
+
+# Rename column and display the first five rows of the DataFrame
+count_business_cats.columns = ["count"]
+print("\n", count_business_cats.head())
+
+
