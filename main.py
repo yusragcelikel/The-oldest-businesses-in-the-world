@@ -8,7 +8,7 @@ businesses = pd.read_csv("/Users/yusragokcecelikel/Downloads/CSV files/oldest_bu
 sorted_businesses = businesses.sort_values(by="year_founded")
 
 # Display the first few lines of sorted_businesses
-print("\n", sorted_businesses.head())
+print(sorted_businesses.head(), "\n")
 
 
 
@@ -20,7 +20,7 @@ businesses_countries = sorted_businesses.merge(countries, on="country_code" )
 
 # Filter businesses_countries to include countries in North America only
 north_america = businesses_countries[businesses_countries["continent"] == "North America"]
-print("\n", north_america.head())
+print(north_america.head(), "\n")
 
 
 
@@ -32,7 +32,7 @@ merged_continent = continent.merge(businesses_countries, on=["continent", "year_
 
 # Subset continent so that only the four columns of interest are included
 subset_merged_continent = merged_continent[["continent", "country", "business", "year_founded"]]
-print("\n", subset_merged_continent)
+print(subset_merged_continent, "\n")
 
 
 
@@ -46,7 +46,7 @@ missing_countries = all_countries[all_countries["_merge"] != "both"]
 missing_countries_series = missing_countries["country"]
 
 # Display the series
-print("\n", missing_countries_series)
+print(missing_countries_series, "\n")
 
 
 
@@ -63,7 +63,7 @@ new_missing_countries = new_all_countries[new_all_countries["_merge"] != "both"]
 # Group by continent and create a "count_missing" column
 count_missing = new_missing_countries.groupby("continent").agg({"country":"count"})
 count_missing.columns = ["count_missing"]
-print("\n", count_missing)
+print(count_missing, "\n")
 
 
 
@@ -76,6 +76,6 @@ count_business_cats = businesses_categories.set_index("category").agg("count")
 
 # Rename column and display the first five rows of the DataFrame
 count_business_cats.columns = ["count"]
-print("\n", count_business_cats.head())
+print(count_business_cats.head())
 
 
