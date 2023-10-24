@@ -81,13 +81,29 @@ count_business_cats = businesses_categories.groupby("category").agg({"business":
 
 # Rename column and display the first five rows of the DataFrame
 count_business_cats.columns = ["count"]
-print(count_business_cats.head())
+print("\nThe oldest industries:\n")
+print(count_business_cats.head(), "\n")
 
 
 
 # Filter using .query() for CAT4 businesses founded before 1800; sort results
-old_restaurants = businesses_categories.query('category_code =="CAT4" and year_founded < 1800')
+old_restaurants = businesses_categories.query('year_founded < 1800 and category_code == "CAT4"')
 
 # Sort the DataFrame
-sorted_old_restaurants = old_restaurants.sort_values(by="year_founded", ascending=True)
-print(sorted_old_restaurants)
+old_restaurants = old_restaurants.sort_values("year_founded")
+print("\nRestaurant representation:\n")
+print(old_restaurants, "\n")
+
+
+
+
+# Merge all businesses, countries, and categories together
+businesses_categories_countries = businesses_categories.merge(countries, on="country_code")
+
+# Sort businesses_categories_countries from oldest to most recent
+businesses_categories_countries = businesses_categories_countries.sort_values("year_founded")
+
+# Create the oldest by continent and category DataFrame
+oldest_by_continent_category = businesses_categories_countries.groupby(["continent", "category"]).agg({"year_founded":"min"})
+print("\nCategories and continents:\n")
+print(oldest_by_continent_category.head(), "\n")
